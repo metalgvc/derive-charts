@@ -1,0 +1,73 @@
+$body-color: #39444a;
+$table-color: #242e34;
+$table-hover-color: #222;
+
+body {
+  background-color: $body-color;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  .table-head {
+    display: table-header-group;
+  }
+
+  .table-body {
+    display: table-row-group;
+  }
+
+  .table-row {
+    display: table-row;
+    background-color: $table-color;
+
+  }
+
+  .portfolio-rows .table-row:hover {
+    background-color: $table-hover-color;
+
+    .table-cell {
+      background-color: $table-hover-color;
+    }
+  }
+
+  .table-cell {
+    display: table-cell;
+    padding: 5px;
+    //border: 1px solid $table-color;
+    border: none;
+    vertical-align: middle;
+  }
+}
+
+img.icon {
+  width: 30px;
+  vertical-align: middle;
+}
+
+.sl-short, .sl-Short, .red {
+  color: #f00;
+}
+
+.sl-long, .sl-Long, .green {
+  color: #0f0;
+}
+
+.text-grey {
+  color: #666;
+}
+
+.hide {
+  display: none;
+}
+
+.px {
+  width: 1px;
+}

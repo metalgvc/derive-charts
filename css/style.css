@@ -1,0 +1,63 @@
+body {
+  background-color: #39444a;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.table .table-head {
+  display: table-header-group;
+}
+.table .table-body {
+  display: table-row-group;
+}
+.table .table-row {
+  display: table-row;
+  background-color: #242e34;
+}
+.table .portfolio-rows .table-row:hover {
+  background-color: #222;
+}
+.table .portfolio-rows .table-row:hover .table-cell {
+  background-color: #222;
+}
+.table .table-cell {
+  display: table-cell;
+  padding: 5px;
+  border: none;
+  vertical-align: middle;
+}
+
+img.icon {
+  width: 30px;
+  vertical-align: middle;
+}
+
+.sl-short, .sl-Short, .red {
+  color: #f00;
+}
+
+.sl-long, .sl-Long, .green {
+  color: #0f0;
+}
+
+.text-grey {
+  color: #666;
+}
+
+.hide {
+  display: none;
+}
+
+.px {
+  width: 1px;
+}
+
+/*# sourceMappingURL=style.css.map */
