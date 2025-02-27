@@ -1,7 +1,8 @@
 
-const Derive = function (webSocket, walletAddr) {
+const Derive = function (webSocket) {
 
     const listeners = {};
+    let deriveWalletAddr = null;
 
     webSocket.onmessage = (event) => {
         let data = JSON.parse(event.data);
@@ -20,7 +21,8 @@ const Derive = function (webSocket, walletAddr) {
         console.error('WebSocket error:', error);
     };
 
-    this.auth = async function () {
+    this.auth = async function (walletAddr) {
+        deriveWalletAddr = walletAddr;
 
         const provider = new ethers.BrowserProvider(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -52,7 +54,7 @@ const Derive = function (webSocket, walletAddr) {
     };
 
     this.portfolio = async function () {
-        let data = await this.call('all_portfolios', 'private/get_all_portfolios', { wallet: walletAddr });
+        let data = await this.call('all_portfolios', 'private/get_all_portfolios', { wallet: deriveWalletAddr });
 
         let result = null;
         if (data?.result) {

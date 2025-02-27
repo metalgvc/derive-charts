@@ -1,13 +1,14 @@
 $body-color: #39444a;
 $table-color: #242e34;
 $table-hover-color: #222;
+$text-color: #fff;
 
 body {
   background-color: $body-color;
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 10px;
-  color: #fff;
+  color: $text-color;
 }
 
 .table {
@@ -30,11 +31,18 @@ body {
 
   }
 
-  .portfolio-rows .table-row:hover {
-    background-color: $table-hover-color;
+  .portfolio-rows {
 
-    .table-cell {
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    .table-row:hover {
       background-color: $table-hover-color;
+
+      .table-cell {
+        background-color: $table-hover-color;
+      }
     }
   }
 
@@ -44,6 +52,41 @@ body {
     //border: 1px solid $table-color;
     border: none;
     vertical-align: middle;
+  }
+}
+
+#derive-address {
+  cursor: pointer;
+}
+
+.minmax {
+  float: right;
+  margin-bottom: -15px;
+  text-decoration: none;
+  padding: 5px;
+  font-size: 24px;
+  color: lime;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+label {
+  cursor: pointer;
+}
+
+.clear {
+  font-size: 9px;
+  color: $text-color;
+
+  a {
+    text-decoration: none;
+    color: $text-color;
   }
 }
 

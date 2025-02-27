@@ -41,6 +41,18 @@ const tmpl = function(id, data){
     return html;
 };
 
+const minmax = function(e){
+    let $a = jQuery(e.currentTarget);
+    let $target = $a.next();
+    if ($a.text() === '-') {
+        $target.hide();
+        $a.text('+');
+    } else {
+        $target.show();
+        $a.text('-');
+    }
+};
+
 const formatExpDate = function(dateStr) {
     let year = dateStr.substring(0, 4);
     let month = dateStr.substring(4, 6) - 1; // Months are 0-based

@@ -9,17 +9,23 @@ const Dashboard = function($){
 
     this.init = async function(){
 
+        let autorefresh = localStorage.getItem('autorefresh');
+        if (autorefresh !== null) {
+            $('input[name="autorefresh"]').prop('checked', !!parseInt(autorefresh));
+        }
+
         initWalletAddr();
 
         const webSocket = new WebSocket(url);
-        derive = await (new Derive(webSocket, deriveWalletAddr));
+        derive = await (new Derive(webSocket));
 
         // let result = await derive.call('currencies', 'public/get_all_currencies', {});
+        if (deriveWalletAddr) {
+            let auth = await derive.auth(deriveWalletAddr);
+            //console.log('auth:', auth);
 
-        let auth = await derive.auth();
-        //console.log('auth:', auth);
-
-        await this.refreshPortfolio();
+            await this.refreshPortfolio();
+        }
 
         let self = this;
         $(document)
@@ -30,20 +36,37 @@ const Dashboard = function($){
                 deriveWalletAddr = null;
                 initWalletAddr();
             })
+            .on('change', 'input[name="autorefresh"]', function(e){
+                localStorage.setItem('autorefresh', $(e.currentTarget).is(':checked') ? 1 : 0);
+            })
+            .on('click', '.minmax', minmax)
+            .on('click', '.clear a', function(e){
+                $('.portfolio-rows input[type="checkbox"]:checked').prop('checked', false);
+                //self.refreshPortfolio();
+                self.renderChart(portfolio);
+            })
         ;
 
         setInterval(function(){
-            self.refreshPortfolio();
+            if ($('input[name="autorefresh"]:checked').length > 0) {
+                self.refreshPortfolio();
+            }
         }, 10 * 1000);
     };
 
-    let initWalletAddr = function() {
+    let initWalletAddr = async function() {
         if (!deriveWalletAddr) {
-            deriveWalletAddr = prompt('Please enter your derive wallet address:');
-            localStorage.setItem('walletAddr', deriveWalletAddr);
+            let _deriveWalletAddr = prompt('Please enter your derive wallet address:');
+            if (_deriveWalletAddr) {
+                deriveWalletAddr = _deriveWalletAddr;
+                localStorage.setItem('walletAddr', deriveWalletAddr);
+                await derive.auth(deriveWalletAddr);
+            }
         }
 
-        $('#derive-address').text(deriveWalletAddr ? deriveWalletAddr.slice(0, 3) + '...' + deriveWalletAddr.slice(-3) : '');
+        if (deriveWalletAddr) {
+            $('#derive-address').text(deriveWalletAddr ? deriveWalletAddr.slice(0, 5) + '...' + deriveWalletAddr.slice(-3) : '');
+        }
     }
 
     this.refreshPortfolio = async function(){
@@ -62,7 +85,8 @@ const Dashboard = function($){
             _checkedPosTmp.push($(el).attr('name'));
         });
 
-        $('.portfolio-rows').html('');
+        //$('.portfolio-rows').html('');
+        let html = '';
 
         for (let subacc of result) {
 
@@ -110,9 +134,12 @@ const Dashboard = function($){
                 let ticker = position['instrument_name'].split('-')[0].toLowerCase();
                 position['icon_src'] = 'https://www.derive.xyz/_next/image?url=%2Fimages%2Ftokens%2F'+ ticker +'.png&w=64&q=75'
 
-                $('.portfolio-rows').append(tmpl('portfolio-row', position));
+                //$('.portfolio-rows').append(tmpl('portfolio-row', position));
+                html += tmpl('portfolio-row', position);
             }
         }
+
+        $('.portfolio-rows').html(html);
 
         // restore checked positions
         if (_checkedPosTmp.length > 0) {
@@ -138,7 +165,7 @@ const Dashboard = function($){
         // TODO add html inputs to manual adjust size
         let limits = [700, 1000];
         if (tickerPrice > 10000) {
-            limits = [7000, 10000];
+            limits = [5000, 20000];
         } if (tickerPrice < 10) {
             limits = [tickerPrice, 10];
         } else if (tickerPrice < 100) {

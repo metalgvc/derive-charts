@@ -22,6 +22,9 @@ body {
   display: table-row;
   background-color: #242e34;
 }
+.table .portfolio-rows input[type=checkbox] {
+  cursor: pointer;
+}
 .table .portfolio-rows .table-row:hover {
   background-color: #222;
 }
@@ -33,6 +36,40 @@ body {
   padding: 5px;
   border: none;
   vertical-align: middle;
+}
+
+#derive-address {
+  cursor: pointer;
+}
+
+.minmax {
+  float: right;
+  margin-bottom: -15px;
+  text-decoration: none;
+  padding: 5px;
+  font-size: 24px;
+  color: lime;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+label {
+  cursor: pointer;
+}
+
+.clear {
+  font-size: 9px;
+  color: #fff;
+}
+.clear a {
+  text-decoration: none;
+  color: #fff;
 }
 
 img.icon {
