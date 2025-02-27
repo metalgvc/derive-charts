@@ -3,7 +3,7 @@
 Use your Derive Wallet address from https://www.derive.xyz/developers and MetaMask to login.
 
 
-**Alpha version, use at your own risk!** 
+**Alpha version, this project was created for my own usage, use at your own risk!** 
 
 ---
 ### How to use
